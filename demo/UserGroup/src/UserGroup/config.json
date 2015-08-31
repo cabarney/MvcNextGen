@@ -1,0 +1,7 @@
+{
+  "Data": {
+    "DefaultConnection": {
+      "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=aspnet5-UserGroup-50dc5308-10db-4369-9b46-cd7be603d7f6;Trusted_Connection=True;MultipleActiveResultSets=true"
+    }
+  }
+}
