@@ -1,0 +1,19 @@
+﻿@model Meeting
+
+@{
+    ViewBag.Title = "Edit Meeting";
+}
+
+<h2>Edit "@Model.Title"</h2>
+
+<form class="form-horizontal" role="form" asp-controller="Venues" asp-action="Edit">
+    <input asp-for="Id" type="hidden"/>
+    @await Html.PartialAsync("_CreateOrEdit")
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+    </div>
+</form>

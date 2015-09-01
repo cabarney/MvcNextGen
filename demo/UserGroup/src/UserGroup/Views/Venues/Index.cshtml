@@ -1,0 +1,21 @@
+﻿@model PagedListViewModel<Venue>
+
+@{
+    ViewBag.Title = "Venues";
+}
+
+<h2>Venues</h2>
+
+@foreach (var venue in Model.Items)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">@venue.Name</div>
+        <div class="panel-body">
+            @venue.StreetAddress<br/>
+            @venue.City, @venue.State @venue.Zip
+            <hr/>
+            @venue.Directions<br/>
+        </div>
+    </div>
+}
+ 

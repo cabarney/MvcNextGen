@@ -1,0 +1,21 @@
+﻿@model PagedListViewModel<Meeting>
+
+@{
+    ViewBag.Title = "Meetings";
+}
+
+<h2>Meetings</h2>
+
+@foreach (var meeting in Model.Items)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">@meeting.Title (<a asp-controller="Meetings" asp-action="Edit" asp-route-id="@meeting.Id">Edit</a>)</div>
+        <div class="panel-body">
+            @meeting.Description
+        </div>
+    </div>
+}
+
+
+<hr/>
+<a asp-controller="Meetings" action="Create">New Meeting</a>

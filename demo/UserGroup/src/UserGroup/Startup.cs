@@ -86,6 +86,11 @@ namespace UserGroup
             // Register application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            services.AddTransient<IRepository<Meeting>, MeetingRepository>();
+            services.AddTransient<IRepository<Venue>, VenueRepository>();
+            services.AddTransient<IRepository<Registration>, RegistrationRepository>();
+            services.AddTransient<IRepository<Member>, MemberRepository>();
         }
 
         // Configure is called after ConfigureServices is called.
