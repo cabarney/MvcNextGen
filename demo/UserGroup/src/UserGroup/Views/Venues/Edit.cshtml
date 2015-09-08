@@ -1,10 +1,10 @@
-﻿@model Meeting
+﻿@model Venue
 
 @{
     ViewBag.Title = "Edit Meeting";
 }
 
-<h2>Edit "@Model.Title"</h2>
+<h2>Edit "@Model.Name"</h2>
 
 <form class="form-horizontal" role="form" asp-controller="Venues" asp-action="Edit">
     <input asp-for="Id" type="hidden"/>

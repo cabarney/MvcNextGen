@@ -1,8 +1,10 @@
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using UserGroup.Models;
 
 namespace UserGroup.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class VenuesController : Controller
     {
         private readonly IRepository<Venue> _repository;
@@ -51,20 +53,6 @@ namespace UserGroup.Controllers
                 return View(venue);
             }
             _repository.Update(venue);
-            _repository.Save();
-            return RedirectToAction("Index");
-        }
-
-        // Delete
-        public ActionResult Delete(int id)
-        {
-            return View(_repository.Find(id));
-        }
-
-        [HttpPost("delete")]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            _repository.Delete(id);
             _repository.Save();
             return RedirectToAction("Index");
         }

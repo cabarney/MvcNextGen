@@ -7,9 +7,19 @@ using UserGroup.Models;
 namespace UserGroupMigrations
 {
     [ContextType(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    partial class AddRegistrationFlagToMeeting
     {
-        public override void BuildModel(ModelBuilder builder)
+        public override string Id
+        {
+            get { return "20150901162246_AddRegistrationFlagToMeeting"; }
+        }
+
+        public override string ProductVersion
+        {
+            get { return "7.0.0-beta6-13815"; }
+        }
+
+        public override void BuildTargetModel(ModelBuilder builder)
         {
             builder
                 .Annotation("ProductVersion", "7.0.0-beta6-13815")
@@ -112,9 +122,6 @@ namespace UserGroupMigrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<string>("Name")
-                        .Annotation("MaxLength", 100);
-
                     b.Property<string>("NormalizedEmail")
                         .Annotation("MaxLength", 256);
 
@@ -142,7 +149,7 @@ namespace UserGroupMigrations
                     b.Index("NormalizedUserName")
                         .Annotation("Relational:Name", "UserNameIndex");
 
-                    b.Annotation("Relational:TableName", "Users");
+                    b.Annotation("Relational:TableName", "AspNetUsers");
                 });
 
             builder.Entity("UserGroup.Models.Meeting", b =>
@@ -169,6 +176,21 @@ namespace UserGroupMigrations
                     b.Key("Id");
                 });
 
+            builder.Entity("UserGroup.Models.Member", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Name")
+                        .Annotation("MaxLength", 100);
+
+                    b.Property<string>("UserId");
+
+                    b.Key("Id");
+                });
+
             builder.Entity("UserGroup.Models.Registration", b =>
                 {
                     b.Property<int>("Id")
@@ -178,10 +200,10 @@ namespace UserGroupMigrations
 
                     b.Property<int>("MeetingId");
 
+                    b.Property<int?>("MemberId");
+
                     b.Property<string>("Name")
                         .Annotation("MaxLength", 100);
-
-                    b.Property<string>("UserId");
 
                     b.Key("Id");
                 });
@@ -250,15 +272,22 @@ namespace UserGroupMigrations
                         .ForeignKey("VenueId");
                 });
 
+            builder.Entity("UserGroup.Models.Member", b =>
+                {
+                    b.Reference("UserGroup.Models.ApplicationUser")
+                        .InverseCollection()
+                        .ForeignKey("UserId");
+                });
+
             builder.Entity("UserGroup.Models.Registration", b =>
                 {
                     b.Reference("UserGroup.Models.Meeting")
                         .InverseCollection()
                         .ForeignKey("MeetingId");
 
-                    b.Reference("UserGroup.Models.ApplicationUser")
+                    b.Reference("UserGroup.Models.Member")
                         .InverseCollection()
-                        .ForeignKey("UserId");
+                        .ForeignKey("MemberId");
                 });
         }
     }

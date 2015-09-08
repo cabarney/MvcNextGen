@@ -9,13 +9,19 @@
 @foreach (var meeting in Model.Items)
 {
     <div class="panel panel-default">
-        <div class="panel-heading">@meeting.Title (<a asp-controller="Meetings" asp-action="Edit" asp-route-id="@meeting.Id">Edit</a>)</div>
+        <div class="panel-heading">
+            <a asp-controller="Meetings" asp-action="Detail" asp-route-id="@meeting.Id"> @meeting.Title</a>
+            <span asp-visible='User.IsInRole("Admin")'>
+                (<a asp-controller="Meetings" asp-action="Edit" asp-route-id="@meeting.Id">Edit</a> | <a asp-controller="Meetings" asp-action="Delete" asp-route-id="@meeting.Id">Delete</a>)
+            </span>
+        </div>
         <div class="panel-body">
             @meeting.Description
         </div>
     </div>
 }
 
-
-<hr/>
-<a asp-controller="Meetings" action="Create">New Meeting</a>
+<div asp-visible='User.IsInRole("Admin")'>
+    <hr />
+    <a asp-controller="Meetings" asp-action="Create">New Meeting</a>
+</div>

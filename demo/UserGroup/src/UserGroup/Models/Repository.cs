@@ -65,11 +65,7 @@ namespace UserGroup.Models
         {
         }
     }
-    public class MemberRepository : Repository<Member> {
-        public MemberRepository(ApplicationDbContext db) : base(db)
-        {
-        }
-    }
+    
     public class RegistrationRepository : Repository<Registration> {
         public RegistrationRepository(ApplicationDbContext db) : base(db)
         {

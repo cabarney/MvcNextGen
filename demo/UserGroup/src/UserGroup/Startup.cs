@@ -59,6 +59,7 @@ namespace UserGroup
             // Add Identity services to the services container.
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddUserManager<AppUserManager>()
                 .AddDefaultTokenProviders();
 
             // Configure the options for the authentication middleware.
@@ -90,7 +91,8 @@ namespace UserGroup
             services.AddTransient<IRepository<Meeting>, MeetingRepository>();
             services.AddTransient<IRepository<Venue>, VenueRepository>();
             services.AddTransient<IRepository<Registration>, RegistrationRepository>();
-            services.AddTransient<IRepository<Member>, MemberRepository>();
+
+            services.AddScoped<AppUserManager>();
         }
 
         // Configure is called after ConfigureServices is called.
@@ -138,6 +140,36 @@ namespace UserGroup
                 // Uncomment the following line to add a route for porting Web API 2 controllers.
                 // routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
             });
+
+            InitializeDb(app);
+        }
+
+        private async void InitializeDb(IApplicationBuilder app)
+        {
+            using (var db = app.ApplicationServices.GetService<ApplicationDbContext>())
+            using (var userManager = app.ApplicationServices.GetService<AppUserManager>())
+            using (var roleManager = app.ApplicationServices.GetService<RoleManager<IdentityRole>>())
+            {
+                db.Database.ApplyMigrations();
+                if (await roleManager.FindByNameAsync("Admin") == null)
+                    await roleManager.CreateAsync(new IdentityRole("Admin"));
+
+                var user = await userManager.FindByEmailAsync("adam@adambarney.com");
+                if (user == null)
+                {
+                    user = new ApplicationUser
+                    {
+                        Name = "Adam Barney",
+                        UserName = "adam@adambarney.com",
+                        Email = "adam@adambarney.com"
+                    };
+                    var result = await userManager.CreateAsync(user, "notP@ssw0rd");
+                }
+                if (!await userManager.IsInRoleAsync(user, "Admin"))
+                {
+                    await userManager.AddToRoleAsync(user, "Admin");
+                }
+            }
         }
     }
 }

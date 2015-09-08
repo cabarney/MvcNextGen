@@ -4,8 +4,8 @@ namespace UserGroup.Models
 {
     public class Registration : Entity
     {
-        public int? MemberId { get; set; }
-        public virtual Member Member { get; set; }
+        public string UserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public int MeetingId { get; set; }
         public Meeting Meeting { get; set; }
         [MaxLength(100)]

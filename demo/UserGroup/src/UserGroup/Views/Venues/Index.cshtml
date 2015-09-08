@@ -6,16 +6,29 @@
 
 <h2>Venues</h2>
 
-@foreach (var venue in Model.Items)
-{
-    <div class="panel panel-default">
-        <div class="panel-heading">@venue.Name</div>
-        <div class="panel-body">
-            @venue.StreetAddress<br/>
-            @venue.City, @venue.State @venue.Zip
-            <hr/>
-            @venue.Directions<br/>
-        </div>
-    </div>
-}
- 
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+    <tr>
+        <th class="col-sm-1"></th>
+        <th class="col-sm-5">Name</th>
+        <th class="col-sm-4">Address</th>
+        <th class="col-sm-2">City</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+    @foreach (var venue in Model.Items)
+    {
+        <tr>
+            <td><a asp-controller="Venues" asp-action="Edit" asp-route-id="@venue.Id">Edit</a></td>
+            <td>@venue.Name</td>
+            <td>@venue.StreetAddress</td>
+            <td>@venue.City</td>
+        </tr>
+    }
+
+    </tbody>
+</table>
+
+ <hr />
+<a asp-controller="Venues" asp-action="Create">New Venue</a>

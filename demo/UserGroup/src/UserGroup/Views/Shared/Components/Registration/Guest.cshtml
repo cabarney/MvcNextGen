@@ -1,0 +1,25 @@
+﻿@model Registration
+<p>
+    You are not signed in as a member, but you may register as a guest.
+    Interested in <a asp-controller="Account" asp-action="Register">becoming a member?</a>
+</p>
+<form asp-controller="Meetings" asp-action="RegisterGuest" class="form-horizontal">
+    <input asp-for="MeetingId" type="hidden" />
+    <div class="form-group">
+        <label class="col-sm-3 control-label" asp-for="Name"></label>
+        <div class="col-sm-9">
+            <input asp-for="Name" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label" asp-for="Email"></label>
+        <div class="col-sm-9">
+            <input asp-for="Email" class="form-control"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+    </div>
+</form>

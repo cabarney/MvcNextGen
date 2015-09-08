@@ -1,0 +1,23 @@
+﻿@model Meeting
+
+@{
+    ViewBag.Title = "Delete Meeting?";
+}
+<br />
+
+    <div class="panel panel-danger">
+
+        <input asp-for="Id" type="hidden" />
+        <div class="panel-heading">
+            <h3 class="panel-title">Are you sure?</h3>
+        </div>
+        <div class="panel-body">
+            Are you sure youwant to delete the meeting "@Model.Title"?
+        </div>
+        <div class="panel-footer">
+            <form asp-controller="Meetings" asp-action="ConfirmDelete" method="POST">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+
+    </div>

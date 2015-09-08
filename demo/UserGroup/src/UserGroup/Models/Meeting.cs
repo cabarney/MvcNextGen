@@ -17,5 +17,6 @@ namespace UserGroup.Models
         public int VenueId { get; set; }
         public virtual Venue Venue { get; set; }
         public virtual ICollection<Registration> Registrations { get; set; }
+        public bool RegistrationOpen { get; set; }
     }
 }

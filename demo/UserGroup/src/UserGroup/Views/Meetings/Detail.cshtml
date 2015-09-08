@@ -1,12 +1,43 @@
-﻿@model Meeting
+﻿@using System.Security.Claims
+@using Microsoft.AspNet.Mvc.ModelBinding.Validation
+@using Microsoft.Data.Entity.Metadata
+@model Meeting
 
 @{
-    ViewBag.Title = "Meetings";
+    ViewBag.Title = Model.Title;
 }
 
-<div class="panel panel-default">
-    <div class="panel-heading">@Model.Title</div>
-    <div class="panel-body">
-        @Model.Description
+<div class="page-header">
+    <h2>
+        @Model.Title<br />
+        <small>@Model.MeetingDate.ToLongDateString()</small>
+    </h2>
+</div>
+<div class="col-md-8">
+    <div>@Model.Description</div>
+    <br />
+    <p class="lead">Speaker: @Model.Speaker</p>
+    <blockquote>@Model.SpeakerBio</blockquote>
+
+    @if (Model.RegistrationOpen)
+    {
+        <hr/>
+        <h4>Registration</h4>
+        @Component.Invoke("Registration", @Model.Id)
+    }
+
+</div>
+<div class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">Meeting Location</div>
+        <div class="panel-body">
+            <address>
+                <strong>@Model.Venue.Name</strong><br />
+                @Model.Venue.StreetAddress<br />
+                @Model.Venue.City, @Model.Venue.State @Model.Venue.Zip
+            </address>
+            <strong>Directions</strong>
+            <p>@Model.Venue.Directions</p>
+        </div>
     </div>
 </div>
