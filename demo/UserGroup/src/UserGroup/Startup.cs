@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Authentication.Facebook;
 using Microsoft.AspNet.Authentication.Google;
 using Microsoft.AspNet.Authentication.MicrosoftAccount;
@@ -10,7 +9,6 @@ using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Diagnostics.Entity;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Routing;
@@ -22,6 +20,8 @@ using Microsoft.Framework.Logging.Console;
 using Microsoft.Framework.Runtime;
 using UserGroup.Models;
 using UserGroup.Services;
+using System.Diagnostics;
+using System.IO;
 
 namespace UserGroup
 {
@@ -116,6 +116,8 @@ namespace UserGroup
                 // sends the request to the following path or controller action.
                 app.UseErrorHandler("/Home/Error");
             }
+
+            //app.UseMiddleware<TestMiddleware>();
 
             // Add static files to the request pipeline.
             app.UseStaticFiles();
