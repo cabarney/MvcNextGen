@@ -34,7 +34,7 @@
 <div class="form-group">
     <label class="col-sm-3 control-label" asp-for="VenueId"></label>
     <div class="col-sm-9">
-        <select class="form-control" asp-for="VenueId" asp-items=@VenueRepository.All().Select(v => new SelectListItem {Text = v.Name, Value = v.Id.ToString()})>
+        <select class="form-control" asp-for="VenueId" asp-items='@VenueRepository.All().Select(v => new SelectListItem {Text = v.Name, Value = v.Id.ToString()})'>
             <option value="0">Select</option>
         </select>
     </div>

@@ -10,6 +10,4 @@ namespace UserGroup.Models
         [MaxLength(100)]
         public string Name { get; set; }
     }
-    public class ApplicationRole:IdentityRole<String>
-    { }
 }

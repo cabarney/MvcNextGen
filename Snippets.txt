@@ -1,0 +1,120 @@
+====================
+DEMO 1 - ASP.NET 5 FEATURES
+====================
+
+
+    public class TestMiddleware
+    {
+        RequestDelegate _next;
+
+        public TestMiddleware(RequestDelegate next)
+        {
+            _next = next;
+        }
+
+        public async Task Invoke(HttpContext context)
+        {
+            //await context.Response.WriteAsync("Hi.");
+
+            //Debug.WriteLine($"Request: {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}");
+            //await _next(context);
+
+            //var sw = new Stopwatch();
+            //sw.Start();
+
+            //await _next(context);
+
+            //Debug.WriteLine($"{sw.ElapsedMilliseconds} elapsed");
+        }
+    }
+	
+
+---------
+
+	
+    public class TestController
+    {
+        public string Index()
+        {
+            return "I'm in a Controller!";
+        }
+    }
+	
+
+---------
+
+	
+    public class MessageFactory
+    {
+        public string CreateMessage()
+        {
+            return "I've been injected via ASP.NET's built-in Dependency Injection feature!";
+        }
+    }
+	
+
+        private readonly MessageFactory _factory;
+
+        public TestController(MessageFactory factory)
+        {
+            _factory = factory;
+        }
+
+        public string Message()
+        {
+            return _factory.CreateMessage();
+        }
+		
+	
+---------
+
+	
+    public class Thing
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+    public class TestContext : DbContext
+    {
+        public DbSet<Thing> Things { get; set; }
+    }
+	
+	
+	
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<TestContext>(options =>
+                    options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=HdcMorningTest;Trusted_Connection=True;"));
+					
+					
+					
+					
+====================
+DEMO 2 - Tooling
+====================				
+
+
+
+gulp.task('compile:less', function () {
+    return gulp.src([paths.less], {base:'.'})
+        .pipe(sourcemaps.init())
+        .pipe(less())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest("."));
+});
+
+
+
+
+====================
+DEMO 4 - MVC
+====================	
+
+
+
+        //API
+        [HttpGet("api/[controller]/{id:int}")]
+        public ObjectResult Get(int id)
+        {
+            return new ObjectResult(_meetingRepository.Find(id));
+        }
